@@ -1,0 +1,17 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-dotenv>=1.0.0
+
+# LlamaIndex core
+llama-index-core>=0.12.0
+
+# LlamaIndex integrations
+llama-index-embeddings-huggingface>=0.3.0
+llama-index-llms-anthropic>=0.3.0
+llama-index-vector-stores-qdrant>=0.3.0
+
+# Qdrant client
+qdrant-client>=1.12.0
+
+# Sentence transformers (para HuggingFace embeddings)
+sentence-transformers>=3.0.0
