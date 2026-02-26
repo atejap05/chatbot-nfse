@@ -6,7 +6,9 @@
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:8000";
 
-function extractContent(msg: { content?: string; parts?: Array<{ type?: string; text?: string }> }): string {
+type MessageLike = { content?: string; parts?: Array<{ type?: string; text?: string }> };
+
+function extractContent(msg: MessageLike): string {
   if (typeof msg.content === "string") return msg.content;
   if (Array.isArray(msg.parts)) {
     const textPart = msg.parts.find((p) => p.type === "text" || "text" in p);
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
     const messages = body.messages ?? [];
 
     const formattedMessages = messages.map(
-      (m: { role?: string; content?: string; parts?: unknown[] }) => ({
+      (m: { role?: string; content?: string; parts?: Array<{ type?: string; text?: string }> }) => ({
         role: m.role || "user",
         content: extractContent(m),
       })

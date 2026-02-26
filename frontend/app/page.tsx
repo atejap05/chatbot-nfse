@@ -23,15 +23,15 @@ const SUGGESTED_QUESTIONS = [
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status } = useChat({
+  const { messages, append, status } = useChat({
     api: "/api/chat",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
-    if (text && status !== "streaming") {
-      sendMessage({ text });
+    if (text && status !== "streaming" && status !== "submitted") {
+      append({ role: "user", content: text });
       setInput("");
     }
   };
@@ -58,8 +58,8 @@ export default function ChatPage() {
                 <button
                   key={q}
                   type="button"
-                  onClick={() => sendMessage({ text: q })}
-                  disabled={status === "streaming"}
+                  onClick={() => append({ role: "user", content: q })}
+                  disabled={status === "streaming" || status === "submitted"}
                   className="px-4 py-2 text-sm rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors disabled:opacity-50"
                 >
                   {q}
@@ -92,7 +92,7 @@ export default function ChatPage() {
           </div>
         ))}
 
-        {status === "streaming" && (
+        {(status === "streaming" || status === "submitted") && (
           <div className="flex justify-start">
             <div className="px-4 py-2 rounded-full bg-slate-200 text-slate-500 text-sm animate-pulse">
               Digitando...
@@ -112,11 +112,11 @@ export default function ChatPage() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Digite sua pergunta sobre NFS-e..."
             className="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            disabled={status === "streaming"}
+            disabled={status === "streaming" || status === "submitted"}
           />
           <button
             type="submit"
-            disabled={status === "streaming" || !input.trim()}
+            disabled={(status === "streaming" || status === "submitted") || !input.trim()}
             className="px-6 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Enviar

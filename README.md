@@ -5,52 +5,86 @@ Chatbot de autoatendimento para dúvidas sobre Nota Fiscal de Serviços Eletrôn
 ## Arquitetura
 
 - **Backend**: Python + FastAPI + LlamaIndex + Anthropic Claude + Qdrant
-- **Frontend**: Next.js 15 + TailwindCSS + Vercel AI SDK
+- **Frontend**: Next.js 16 + TailwindCSS + Vercel AI SDK
 - **Base de conhecimento**: 8 arquivos Markdown em `data/` (~105 Q&As)
 
 ## Pré-requisitos
 
 - Python 3.11+
-- Node.js 18+
+- Node.js 20.9+ (LTS; exigido pelo Next.js 16)
 - Docker (para Qdrant)
 - Chave API Anthropic
 
 ## Configuração
 
+Execute os passos abaixo **na raiz do repositório** (`chatbot-nfse/`), salvo indicação em contrário.
+
 ### 1. Variáveis de ambiente
 
-**Backend** (`backend/.env`):
+**Backend** – crie `backend/.env`:
+
 ```
 ANTHROPIC_API_KEY=sua_chave_anthropic
 QDRANT_URL=http://localhost:6333
 ```
 
-**Frontend** (`frontend/.env.local`):
+**Frontend** – crie `frontend/.env.local`:
+
 ```
 BACKEND_URL=http://127.0.0.1:8000
 ```
 
-### 2. Subir o Qdrant
+### 2. Ambiente virtual Python (venv)
+
+Crie e ative o venv na raiz do projeto:
+
+```bash
+python -m venv .venv
+```
+
+**Linux/macOS:**
+
+```bash
+source .venv/bin/activate
+```
+
+**Windows (PowerShell):**
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Com o venv ativado, instale as dependências do backend:
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+### 3. Subir o Qdrant
 
 ```bash
 docker compose up -d qdrant
 ```
 
-### 3. Indexar os documentos
+### 4. Indexar os documentos
+
+Com o venv ativado e o Qdrant em execução:
 
 ```bash
-cd chatbot-nfse
-pip install -r backend/requirements.txt
 python -m backend.ingest
 ```
 
-### 4. Iniciar o backend
+### 5. Iniciar o backend
+
+Com o venv ativado:
 
 ```bash
 uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 5. Iniciar o frontend
+### 6. Iniciar o frontend
+
+Em outro terminal:
 
 ```bash
 cd frontend

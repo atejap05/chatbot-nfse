@@ -2,7 +2,7 @@
 RAG Engine para o Chatbot NFS-e.
 
 Utiliza LlamaIndex com:
-- Anthropic Claude (claude-sonnet-4-20250514) para geração de respostas
+- Anthropic Claude (configurável via ANTHROPIC_MODEL) para geração de respostas
 - Qdrant como vector store (collection nfse_faq)
 - HuggingFace embeddings (paraphrase-multilingual-MiniLM-L12-v2)
 - Streaming no formato Vercel AI SDK (0:"texto"\n)
@@ -50,9 +50,9 @@ def _get_query_engine():
     if not anthropic_key:
         raise ValueError("ANTHROPIC_API_KEY não configurada no .env")
 
-    # LLM Anthropic Claude (claude-3-5-sonnet é estável; use claude-sonnet-4-* para versões mais recentes)
+    model_name = os.getenv("ANTHROPIC_MODEL", "claude-3-haiku-20240307")
     llm = Anthropic(
-        model="claude-3-5-sonnet-20241022",
+        model=model_name,
         api_key=anthropic_key,
         temperature=0.1,
     )
@@ -95,8 +95,8 @@ def _get_query_engine():
         text_qa_template=qa_prompt,
     )
 
-    query_engine = RetrieverQueryEngine.from_retriever(
-        retriever,
+    query_engine = RetrieverQueryEngine(
+        retriever=retriever,
         response_synthesizer=response_synthesizer,
     )
 

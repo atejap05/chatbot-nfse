@@ -4,9 +4,9 @@
 
 | Tecnologia | Versão | Uso |
 |------------|--------|-----|
-| **Next.js** | 14.2.18 | Framework React com App Router, SSR e API Routes |
-| **React** | ^18.2.0 | Biblioteca de UI |
-| **TypeScript** | ^5.0.0 | Tipagem estática |
+| **Next.js** | 16.1.6 | Framework React com App Router, Turbopack, SSR e API Routes |
+| **React** | 19.2.4 | Biblioteca de UI |
+| **TypeScript** | ^5.1.0 | Tipagem estática |
 | **Tailwind CSS** | ^3.4.15 | Estilização utilitária |
 | **Vercel AI SDK** | ai ^4.0.0, @ai-sdk/react ^1.0.0 | Chat, streaming e estado de conversação |
 | **react-markdown** | ^9.0.0 | Renderização de Markdown nas respostas |
@@ -17,10 +17,10 @@
 {
   "@ai-sdk/react": "^1.0.0",   // Hook useChat e integração com AI
   "ai": "^4.0.0",              // Core do Vercel AI SDK
-  "next": "14.2.18",
-  "react": "^18.2.0",
-  "react-dom": "^18.2.0",
-  "react-markdown": "^9.0.0"    // Formatação de respostas (listas, negrito, etc.)
+  "next": "16.1.6",
+  "react": "19.2.4",
+  "react-dom": "19.2.4",
+  "react-markdown": "^9.0.0"   // Formatação de respostas (listas, negrito, etc.)
 }
 ```
 
@@ -51,6 +51,6 @@ O **Vercel AI SDK** fornece:
 
 ## Compatibilidade
 
-- **Node.js**: 18+
-- **Navegadores**: Chrome, Firefox, Safari, Edge (versões recentes)
-- **Next.js**: App Router (não Pages Router)
+- **Node.js**: 20.9+ (LTS; Node 18 não é mais suportado pelo Next.js 16)
+- **Navegadores**: Chrome 111+, Edge 111+, Firefox 111+, Safari 16.4+
+- **Next.js**: App Router; Turbopack é o bundler padrão em dev e build

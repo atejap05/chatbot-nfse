@@ -15,3 +15,8 @@ qdrant-client>=1.12.0
 
 # Sentence transformers (para HuggingFace embeddings)
 sentence-transformers>=3.0.0
+
+# Testes
+pytest>=8.0.0
+httpx>=0.27.0
+requests>=2.31.0

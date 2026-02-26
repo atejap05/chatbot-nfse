@@ -109,10 +109,11 @@ def main() -> None:
 
     # Criar índice e indexar
     print("Indexando documentos no Qdrant...")
-    VectorStoreIndex.from_nodes(
-        nodes,
+    VectorStoreIndex(
+        nodes=nodes,
         storage_context=storage_context,
         embed_model=embed_model,
+        show_progress=True,
     )
 
     print(f"Indexação concluída. Collection '{collection_name}' pronta no Qdrant.")
