@@ -23,8 +23,9 @@ const SUGGESTED_QUESTIONS = [
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
-  const { messages, append, status } = useChat({
+  const { messages, append, status, error } = useChat({
     api: "/api/chat",
+    streamProtocol: "text",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,6 +123,11 @@ export default function ChatPage() {
             Enviar
           </button>
         </div>
+        {error && (
+          <p className="mt-2 max-w-3xl mx-auto text-sm text-red-600">
+            Erro ao gerar resposta: {error.message}
+          </p>
+        )}
       </form>
     </div>
   );
